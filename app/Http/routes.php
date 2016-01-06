@@ -18,6 +18,7 @@ Route::get('/', function () {
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::get('login', 'AuthController@authenticate');
+Route::get('logout', 'AuthController@logout');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
@@ -26,9 +27,10 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::group(['middleware' => 'auth'], function() {
-	Route::resource('ticket', 'TicketController');
+	
 	Route::get('ticket/finished', 'TicketController@finished');
-	Route::get('ticket/unfinished', 'TicketController@unfinished');
-	Route::get('ticket/deliverd', 'TicketController@deliverd');
-	Route::get('ticket/undeliverd', 'TicketController@undeliverd');
+	Route::get('ticket/unfinished', 'TicketController@unfinished');	
+	Route::get('ticket/deliverd', 'TicketController@delivered');
+	Route::get('ticket/undelivered', 'TicketController@undelivered');
+	Route::resource('ticket', 'TicketController');
 });

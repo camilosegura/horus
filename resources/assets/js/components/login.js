@@ -1,10 +1,9 @@
 var React = require('react');
 var Nav = require('./nav');
 var Connection = require('../utils/connection');
-var History = require('react-router').History;
 
 var login = React.createClass({
-	mixins: [History],
+	
 
 	getInitialState: function() {
 		return {email: '', password: ''};
@@ -13,19 +12,19 @@ var login = React.createClass({
 	handleSubmit: function(e) {
 		e.preventDefault();
 		var data = {email: this.refs.email.value, password: this.refs.password.value};
-		Connection(data, './login', 'GET', this.onSuccess);
+		Connection(data, './login', 'GET', this.onSuccess, this.props.history);
 	},
 
 	onSuccess: function(data) {
 		console.log('callback',data. this, login);
-		this.history.pushState(null, '/main');
+		this.props.history.pushState(null, '/main');
 	},
 
 	render: function() {
 		console.log('login');
 		return (
 			<div className="row">
-				<Nav />
+				<Nav login={false} />
 				<div className="col-lg-6">
 					<form onSubmit={this.handleSubmit}>
 					  <div className="form-group">

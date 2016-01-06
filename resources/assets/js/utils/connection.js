@@ -1,6 +1,6 @@
 var $ = require('jquery');
 
-var connection = function(data, endPoint, method, callback) {
+var connection = function(data, endPoint, method, callback, history) {
 	console.log('data', data);
 	$.ajax({
 		url: endPoint,
@@ -11,6 +11,7 @@ var connection = function(data, endPoint, method, callback) {
 	.done(callback)
 	.fail(function( jqXHR, textStatus, errorThrown ){
 		console.log('error',jqXHR, textStatus, errorThrown);
+		history.pushState(null, '/login');
 	});
 };
 

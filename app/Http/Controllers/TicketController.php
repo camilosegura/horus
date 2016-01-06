@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Ticket;
+use Mail;
 
 class TicketController extends Controller
 {
@@ -87,6 +88,17 @@ class TicketController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $ticket = Ticket::find($id);
+        $ticket->terminado = $request->terminado;
+        $ticket->entregado = $request->entregado;
+        $ticket->save();
+        /*
+        Mail::send('emails.delivered', ['user' => 'Camilo'], function ($m) {
+            $m->from('postmaster@sandboxdc9b7fd57c5d490c89d7b3bf9c01fabb.mailgun.org', 'Mailgun Sandbox');
+
+            $m->to("k_nser@hotmail.com", "Camilo Segura")->subject('Your Reminder!');
+        });*/
+        return response()->json([], 204);
     }
 
     /**
@@ -103,25 +115,25 @@ class TicketController extends Controller
     public function finished() 
     {
         $tickets = Ticket::where('terminado', '=', 1)->get();
-        return $response()->json($tickets);
+        return response()->json($tickets);
 
     }
 
     public function unfinished()
     {
-        $tickets = Ticket::where('terminado', '=', 0)->get();
-        return $response()->json($tickets);
+        $tickets = Ticket::with('user')->where('terminado', '=', 0)->get();
+        return response()->json($tickets);
     }
 
-    public function deliverd()
+    public function delivered()
     {
         $tickets = Ticket::where('entregado', '=', 1)->get();
-        return $response()->json($tickets);
+        return response()->json($tickets);
     }
 
     public function undelivered()
     {
-        $tickets = Ticket::where('entregado', '=', 0)->get();
-        return $response()->json($tickets);
+        $tickets = Ticket::with('user')->where('entregado', '=', 0)->get();
+        return response()->json($tickets);
     }
 }

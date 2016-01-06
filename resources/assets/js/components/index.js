@@ -7,7 +7,7 @@ var index =  React.createClass({
 		return (
 
 			<div className="row">
-				<Nav />
+				<Nav login={false} />
 				<div className="col-lg-12">
 					<h1>Hola Mundo</h1>
 				</div>

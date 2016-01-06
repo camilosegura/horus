@@ -20,12 +20,13 @@ var nav = React.createClass({
 	    
 	    <div className="collapse navbar-collapse" >
 	      <ul className="nav navbar-nav">
-	        <li className="active"><Link to="/login">Ingresar</Link></li>
-	        <li className="active"><Link to="/ticket/sin-terminar">Sin Terminar</Link></li>
-	        <li className="active"><Link to="/ticket/sin-entregar">Sin Entregar</Link></li>
+	        { !this.props.login ? (<li className="active"><Link to="/login">Ingresar</Link></li>) : null}
+	        { this.props.login ? (<li className="active"><Link to="/main">Crear</Link></li>) : null}
+	        { this.props.login ? (<li className="active"><Link to="/ticket/sin-terminar">Sin Terminar</Link></li>) : null}
+	        { this.props.login ? (<li className="active"><Link to="/ticket/sin-entregar">Sin Entregar</Link></li>) : null}
 	      </ul>
 	      <ul className="nav navbar-nav navbar-right">
-	        <li><Link to="/logout">Salir</Link></li>
+	        { this.props.login ? (<li><Link to="/logout">Salir</Link></li>) : null}
 	      </ul>
 	    </div>
 	  </div>
